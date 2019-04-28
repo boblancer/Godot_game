@@ -9,6 +9,9 @@
 #include <InputEventAction.hpp>
 #include <InputEventMouseButton.hpp>
 #include <GlobalConstants.hpp>
+#include <cmath>
+#include <Node.hpp>
+
 
 
 namespace godot{
@@ -27,9 +30,10 @@ public:
 
 	void _ready();
 	void _control(float delta);
-	void _physics_process(float delta);
-	void HandleInputEvent(Variant& v);
-	void Player::Processs_rotation(InputEventMouse* e);
+	void _process(float delta);
+	void HandleWeaponRotation(InputEvent* e);
+	String Update_motion();
+	void Processs_rotation(InputEventMouse* e);
 
 private:
 	int bullet;
@@ -40,6 +44,7 @@ private:
 	Vector2 velocity;
 	bool can_shoot;
 	bool alive;
+	Node2D* gun;
 };
 
 }

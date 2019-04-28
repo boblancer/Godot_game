@@ -3,30 +3,49 @@
 using namespace godot;
 
 Player::Player(){
+	velocity = Vector2(0,0);
+	speed = 200;
 
 }
 Player::~Player() {
     // add your cleanup here
 }
+
 void Player::_register_methods(){
 	register_method("player_name", &Player::get_player_name);
 	register_method("_ready", &Player::_ready);
 	register_method("_control", &Player::_control);
-	register_method("_physics_process", &Player::_physics_process);
+	register_method("_process", &Player::_process);
 	register_signal<Player>((char *)"Set_gun_cooldown", "node", GODOT_VARIANT_TYPE_OBJECT, "value", GODOT_VARIANT_TYPE_REAL);
-	register_method((char*) "_input", &Player::HandleInputEvent);
-	register_method((char*) "_input", &Player::Processs_rotation);
+	register_method((char*) "_input", &Player::HandleWeaponRotation);
+
+	register_signal<Player>((char *)"position_changed", "node", GODOT_VARIANT_TYPE_OBJECT, "new_pos", GODOT_VARIANT_TYPE_VECTOR2);
+	//register_method((char*) "_input", &Player::Processs_rotation);
 }
-void Player::HandleInputEvent(Variant& v){ 
+void Player::HandleWeaponRotation(InputEvent* e){ 
+	InputEventMouse* m = (InputEventMouse*) e;
+	gun->look_at(m->get_global_position());
+	return;
 	
-	Object* o = godot_object *(&v);
-	InputEvent* e = (InputEvent*) v;
-	const String gsIEMB = "InputEventMouse";
-	String gsClass = v->get_class();
-	if(gsClass == gsIEMB){
-		Processs_rotation((InputEventMouse*) v);
+}
+ String Player::Update_motion(){
+	velocity = Vector2(0,0);
+	Input* i = Input::get_singleton();
+	if(i->is_action_pressed("ui_up")){
+		velocity.y -= speed;
+	}
+	if(i->is_action_pressed("ui_down")){
+		velocity.y += speed;
+	}
+	if(i->is_action_pressed("ui_left")){
+		velocity.x -= speed;
+	}
+	if(i->is_action_pressed("ui_right")){
+		velocity.x += speed;
 	}
 	
+	return "";
+
 }
 void Player::Processs_rotation(InputEventMouse* e){
 	//print("foo");
@@ -51,7 +70,8 @@ String Player::get_player_name(){
 }
 
 void Player::_ready(){
-	emit_signal("Set_gun_cooldown", this, gun_cooldown);
+	//emit_signal("Set_gun_cooldown", this, gun_cooldown);
+	gun = (Node2D*) get_child(0);
 
 }
 void Player::_control(float delta){
@@ -74,10 +94,13 @@ void Player::_control(float delta){
 	return;
 }
 
-void Player::_physics_process(float delta){
+void Player::_process(float delta){
 	if(!alive )
-		return
-	_control(delta);
+		return;
+	Update_motion();
 	move_and_slide(velocity);
+	//emit_signal("position_changed", this, get_position());
+	//_control(delta);
+	//HandleInputEvent();
 
 }
