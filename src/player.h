@@ -43,7 +43,7 @@ public:
 
 	Ref<PackedScene> Bullet;
 	static Position2D* muzzle;
-	static Timer* gun_cooldown;
+	static Timer* Gun_Timer;
 
 private:
 

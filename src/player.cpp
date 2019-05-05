@@ -3,7 +3,7 @@
 using namespace godot;
 
 Position2D* Player::muzzle ;
-
+Timer* Player::Gun_Timer ;
 Player::Player(){
 	velocity = Vector2(0,0);
 	speed = 200;
@@ -20,7 +20,7 @@ void Player::_register_methods(){
 	//register_property<Bullet, Ref<PackedScene>> ((char*) "bullet", &Player::Bul
 	//Bullet = ResourceLoader::get_singleton()->load("res://Bullet.tscn");let
 	//	, ResourceLoader::get_singleton()->load("res://Bullet.tscn"));
-	register_property<Player, Ref<PackedScene>> ((char *) "Player_bullet", &Player::Bullet, ResourceLoader::get_singleton()->load("res://Bullet.tscn") );
+	//register_property<Player, Ref<PackedScene>> ((char *) "Player_bullet", &Player::Bullet, ResourceLoader::get_singleton()->load("res://Bullet.tscn") );
 	register_property<Player, int>("ammo", &Player::ammo, 30);
 
 	register_method("player_name", &Player::get_player_name);
@@ -87,16 +87,9 @@ String Player::get_player_name(){
 void Player::_ready(){
 	//emit_signal("Set_gun_cooldown", this, gun_cooldown);
 	//const godot::String gsNode2D = "Node2D";
-	Node* n;
-	Array a = get_children();
-	int64_t count = get_child_count();
-	
-	for(int64_t i = 0; i < count; i++){
-		n = get_child(i);
-		emit_signal("debug_message", this, (int)i);
 
-	}
 	muzzle = (Position2D*)get_node("Controller/Gun/Muzzle");
+	Gun_Timer = (Timer*)get_node("Controller/Gun/Gun_Timer");
 	emit_signal("position_changed", this, muzzle->get_global_position());
 	
 	//gun = (Node2D*) get_child((int64_t) 1);
@@ -117,7 +110,7 @@ void Player::shoot(){
 	ammo -= 1;
 	emit_signal("shoot",  muzzle->get_global_position() , muzzle->get_global_rotation());
 	can_shoot = false;
-	//gun_cooldown->start();
+	Gun_Timer->start();
 	}
 }
 void Player::_process(float delta){

@@ -15,7 +15,8 @@ func _ready():
 
 
 
-func _on_KinematicBody2D_is_walking(node, direction):
+func _on_Player_is_walking(node, direction):
+	
 	if direction != 0:
 		$Actor.play("run")
 		$Actor.timer.start()
@@ -36,5 +37,4 @@ func _on_KinematicBody2D_is_walking(node, direction):
 	else:
 		$Actor.timer.start()
 		$Actor.play("run")
-
-		
+	pass # Replace with function body.
