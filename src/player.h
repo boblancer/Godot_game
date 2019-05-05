@@ -11,7 +11,11 @@
 #include <GlobalConstants.hpp>
 #include <cmath>
 #include <Node.hpp>
-
+#include <Position2D.hpp>
+#include <PackedScene.hpp>
+#include <bullet.h>
+#include <Timer.hpp>
+#include <ResourceLoader.hpp>
 
 
 namespace godot{
@@ -27,24 +31,32 @@ public:
 
 	void _init();
 	String get_player_name();
+	
 
 	void _ready();
 	void _control(float delta);
 	void _process(float delta);
-	void HandleWeaponRotation(InputEvent* e);
+	void shoot();
 	String Update_motion();
-	void Processs_rotation(InputEventMouse* e);
+
+	void _on_Gun_Timer_timeout();
+
+	Ref<PackedScene> Bullet;
+	static Position2D* muzzle;
+	static Timer* gun_cooldown;
 
 private:
-	int bullet;
+
+	float gun_cooldownVal;
+	int ammo;
 	int speed;
-	int rotation_speed;
-	float gun_cooldown;
+	int rotation_speed;;
 	int hp;
 	Vector2 velocity;
 	bool can_shoot;
 	bool alive;
-	Node2D* gun;
+
+
 };
 
 }

@@ -1,10 +1,15 @@
 #include "player.h"
- 
+
 using namespace godot;
+
+Position2D* Player::muzzle ;
 
 Player::Player(){
 	velocity = Vector2(0,0);
 	speed = 200;
+	ammo = 30;
+	bool can_shoot = true;
+	gun_cooldownVal = 0.2;
 
 }
 Player::~Player() {
@@ -12,54 +17,64 @@ Player::~Player() {
 }
 
 void Player::_register_methods(){
+	//register_property<Bullet, Ref<PackedScene>> ((char*) "bullet", &Player::Bul
+	//Bullet = ResourceLoader::get_singleton()->load("res://Bullet.tscn");let
+	//	, ResourceLoader::get_singleton()->load("res://Bullet.tscn"));
+	register_property<Player, Ref<PackedScene>> ((char *) "Player_bullet", &Player::Bullet, ResourceLoader::get_singleton()->load("res://Bullet.tscn") );
+	register_property<Player, int>("ammo", &Player::ammo, 30);
+
 	register_method("player_name", &Player::get_player_name);
 	register_method("_ready", &Player::_ready);
 	register_method("_control", &Player::_control);
 	register_method("_process", &Player::_process);
-	register_signal<Player>((char *)"Set_gun_cooldown", "node", GODOT_VARIANT_TYPE_OBJECT, "value", GODOT_VARIANT_TYPE_REAL);
-	register_method((char*) "_input", &Player::HandleWeaponRotation);
 
+	register_signal<Player>((char *)"Set_gun_cooldown", "node", GODOT_VARIANT_TYPE_OBJECT, "value", GODOT_VARIANT_TYPE_REAL);
+	register_signal<Player>((char *)"is_walking", "node", GODOT_VARIANT_TYPE_OBJECT, "direction", GODOT_VARIANT_TYPE_INT);
+	register_signal<Player>((char *)"shoot",  "position", GODOT_VARIANT_TYPE_VECTOR2 , "direction", GODOT_VARIANT_TYPE_REAL);
 	register_signal<Player>((char *)"position_changed", "node", GODOT_VARIANT_TYPE_OBJECT, "new_pos", GODOT_VARIANT_TYPE_VECTOR2);
+	register_signal<Player>((char *)"debug_message", "node", GODOT_VARIANT_TYPE_OBJECT, "debug", GODOT_VARIANT_TYPE_INT);
+
+	register_method("_on_Gun_Timer_timeout", &Player::_on_Gun_Timer_timeout);
+
+
 	//register_method((char*) "_input", &Player::Processs_rotation);
 }
-void Player::HandleWeaponRotation(InputEvent* e){ 
-	InputEventMouse* m = (InputEventMouse*) e;
-	gun->look_at(m->get_global_position());
-	return;
-	
-}
+
  String Player::Update_motion(){
 	velocity = Vector2(0,0);
 	Input* i = Input::get_singleton();
 	if(i->is_action_pressed("ui_up")){
 		velocity.y -= speed;
+		emit_signal("is_walking", this, 0);
 	}
 	if(i->is_action_pressed("ui_down")){
 		velocity.y += speed;
+		emit_signal("is_walking", this, 0);
 	}
 	if(i->is_action_pressed("ui_left")){
 		velocity.x -= speed;
+		emit_signal("is_walking", this, 2);
 	}
 	if(i->is_action_pressed("ui_right")){
 		velocity.x += speed;
+		emit_signal("is_walking", this, 1);
 	}
+	if(i->is_mouse_button_pressed(GlobalConstants::BUTTON_LEFT)){
+		//emit_signal("debug_message", this, 555);
+		shoot();
+	}
+	if(i->is_action_pressed("KEY_R")){
+		ammo = 30;
+		emit_signal("debug_message",  this, 300);
+		//emit_signal("is_walking", this, 1);
+	}
+
 	
 	return "";
 
 }
-void Player::Processs_rotation(InputEventMouse* e){
-	//print("foo");
-	set_position(e->get_global_position());
-}
+
 void Player::_init(){
-	int bullet = 0;
-	int speed = 0;
-	int rotation_speed = 0;
-	float gun_cooldown = 0;
-	int hp  = 0;
-	Vector2 velocity  = Vector2(0, 0);
-	bool can_shoot = false;
-	bool alive = false;
 
 }
 
@@ -71,36 +86,46 @@ String Player::get_player_name(){
 
 void Player::_ready(){
 	//emit_signal("Set_gun_cooldown", this, gun_cooldown);
-	gun = (Node2D*) get_child(0);
+	//const godot::String gsNode2D = "Node2D";
+	Node* n;
+	Array a = get_children();
+	int64_t count = get_child_count();
+	
+	for(int64_t i = 0; i < count; i++){
+		n = get_child(i);
+		emit_signal("debug_message", this, (int)i);
+
+	}
+	muzzle = (Position2D*)get_node("Controller/Gun/Muzzle");
+	emit_signal("position_changed", this, muzzle->get_global_position());
+	
+	//gun = (Node2D*) get_child((int64_t) 1);
 
 }
 void Player::_control(float delta){
-	/*
-	this.look_at(get_global_mouse_position)
-	int dir = 0;
-	float rotation = 0;
-	if(Input.is_action_pressed("turn_right"))
-		dir += 1;
-	if(Input.is_action_pressed("turn_left"))
-		dir -= 1;
-	rotation += rotation_speed * dir * delta;
-	velocity = Vector2();
 
-	if(Input.is_action_pressed("forward"))
-		velocity = Vector2(speed, 0).rotated(rotation);
-	if(Input.is_action_pressed("backward"))
-		velocity = Vector2(-speed, 0).rotated(rotation);
-	*/
 	return;
 }
+void Player::_on_Gun_Timer_timeout(){
+	can_shoot = true;
+	emit_signal("debug_message", this, 420);
+}
 
+void Player::shoot(){
+
+	if(can_shoot){
+	ammo -= 1;
+	emit_signal("shoot",  muzzle->get_global_position() , muzzle->get_global_rotation());
+	can_shoot = false;
+	//gun_cooldown->start();
+	}
+}
 void Player::_process(float delta){
 	if(!alive )
 		return;
 	Update_motion();
 	move_and_slide(velocity);
-	//emit_signal("position_changed", this, get_position());
-	//_control(delta);
-	//HandleInputEvent();
+	//emit_signal("position_changed", this, muzzle->get_global_position());
+
 
 }

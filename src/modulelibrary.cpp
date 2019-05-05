@@ -1,5 +1,6 @@
 #include "module.h"
 #include "player.h"
+#include "bullet.h"
 
 extern "C" void GDN_EXPORT godot_gdnative_init(godot_gdnative_init_options *o) {
     godot::Godot::gdnative_init(o);
@@ -14,4 +15,5 @@ extern "C" void GDN_EXPORT godot_nativescript_init(void *handle) {
 
     godot::register_class<godot::GDExample>();
     godot::register_class<godot::Player>();
+    godot::register_class<godot::Bullet>();
 }
