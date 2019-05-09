@@ -1,0 +1,58 @@
+[gd_scene load_steps=10 format=2]
+
+[ext_resource path="res://Explosive.gd" type="Script" id=1]
+[ext_resource path="res://CollisionShape2D.gd" type="Script" id=2]
+[ext_resource path="res://resources/Tank assets/explosion1.png" type="Texture" id=3]
+[ext_resource path="res://resources/Tank assets/explosion2.png" type="Texture" id=4]
+[ext_resource path="res://resources/Tank assets/explosion3.png" type="Texture" id=5]
+[ext_resource path="res://resources/Tank assets/explosion4.png" type="Texture" id=6]
+[ext_resource path="res://resources/bulletRed3.png" type="Texture" id=7]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 2.61321
+height = 14.9437
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 3 ), ExtResource( 4 ), ExtResource( 5 ), ExtResource( 6 ) ],
+"loop": true,
+"name": "Explosion",
+"speed": 4.0
+}, {
+"frames": [ ExtResource( 7 ) ],
+"loop": false,
+"name": "Bullet",
+"speed": 5.0
+} ]
+
+[node name="Explosive" type="Area2D"]
+position = Vector2( -2.75374, 0.189214 )
+scale = Vector2( 2.33738, 6.06825 )
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+speed = 750
+damage = 50
+lifetime = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 2.13665, -0.030987 )
+rotation = 1.57079
+shape = SubResource( 1 )
+script = ExtResource( 2 )
+
+[node name="Lifetime" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="Anim" type="AnimatedSprite" parent="."]
+position = Vector2( 2.60833, -0.068762 )
+scale = Vector2( 0.433779, 0.459043 )
+frames = SubResource( 2 )
+animation = "Explosion"
+playing = true
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_Explosive_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_Timer_timeout"]

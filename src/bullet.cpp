@@ -1,6 +1,6 @@
 #include "bullet.h"
  
-using namespace godot;
+namespace godot{
 
 Timer* Bullet::lifetime_timer ;
 
@@ -46,4 +46,5 @@ void Bullet::_on_Bullet_body_entered(){
 
 void Bullet::explode(){
 	return ;
+}
 }

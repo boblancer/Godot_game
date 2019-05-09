@@ -1,0 +1,107 @@
+[gd_scene load_steps=25 format=2]
+
+[ext_resource path="res://main.gd" type="Script" id=1]
+[ext_resource path="res://Bullet.tscn" type="PackedScene" id=2]
+[ext_resource path="res://bin/player.gdns" type="Script" id=3]
+[ext_resource path="res://Controller.gd" type="Script" id=4]
+[ext_resource path="res://resources/Weapons/14.png" type="Texture" id=5]
+[ext_resource path="res://Sprite.gd" type="Script" id=6]
+[ext_resource path="res://resources/fish/0.png" type="Texture" id=7]
+[ext_resource path="res://resources/fish/1.png" type="Texture" id=8]
+[ext_resource path="res://resources/fish/2.png" type="Texture" id=9]
+[ext_resource path="res://resources/fish/3.png" type="Texture" id=10]
+[ext_resource path="res://resources/fish/4.png" type="Texture" id=11]
+[ext_resource path="res://resources/fish/5.png" type="Texture" id=12]
+[ext_resource path="res://resources/fish/6.png" type="Texture" id=13]
+[ext_resource path="res://resources/fish/7.png" type="Texture" id=14]
+[ext_resource path="res://resources/fish/8.png" type="Texture" id=15]
+[ext_resource path="res://resources/fish/9.png" type="Texture" id=16]
+[ext_resource path="res://resources/fish/10.png" type="Texture" id=17]
+[ext_resource path="res://resources/fish/11.png" type="Texture" id=18]
+[ext_resource path="res://AnimatedSprite.gd" type="Script" id=19]
+[ext_resource path="res://Camera2D.gd" type="Script" id=20]
+[ext_resource path="res://interface/GUI.tscn" type="PackedScene" id=21]
+[ext_resource path="res://HUD.tscn" type="PackedScene" id=22]
+
+[sub_resource type="CapsuleShape2D" id=1]
+radius = 31.4001
+
+[sub_resource type="SpriteFrames" id=2]
+animations = [ {
+"frames": [ ExtResource( 7 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ), ExtResource( 11 ), ExtResource( 12 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 15 ), ExtResource( 16 ), ExtResource( 17 ), ExtResource( 18 ) ],
+"loop": true,
+"name": "run",
+"speed": 15.0
+} ]
+
+[node name="Player_scene" type="Node2D"]
+script = ExtResource( 1 )
+Global_bullet = ExtResource( 2 )
+
+[node name="Player" type="KinematicBody2D" parent="."]
+position = Vector2( 6.68483, -3.71768 )
+scale = Vector2( 0.560001, 0.560001 )
+script = ExtResource( 3 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
+position = Vector2( -6.13876, 12.2774 )
+shape = SubResource( 1 )
+
+[node name="Controller" type="Node2D" parent="Player"]
+script = ExtResource( 4 )
+
+[node name="Gun" type="Sprite" parent="Player/Controller"]
+position = Vector2( 2.45547, 2.45547 )
+rotation = 0.0262274
+scale = Vector2( 1.34377, 1.34377 )
+texture = ExtResource( 5 )
+offset = Vector2( 35, 0 )
+script = ExtResource( 6 )
+
+[node name="Muzzle" type="Position2D" parent="Player/Controller/Gun"]
+position = Vector2( 92.4527, -14.5898 )
+
+[node name="Gun_Timer" type="Timer" parent="Player/Controller/Gun"]
+wait_time = 0.09
+one_shot = true
+
+[node name="Actor" type="AnimatedSprite" parent="Player/Controller"]
+position = Vector2( -10.4286, 12.3387 )
+scale = Vector2( 1.84721, 1.84721 )
+frames = SubResource( 2 )
+animation = "idle"
+playing = true
+script = ExtResource( 19 )
+
+[node name="Walk_timer" type="Timer" parent="Player/Controller/Actor"]
+wait_time = 0.1
+one_shot = true
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2( -5.2417, 5.68835 )
+rotation = 3.14159
+scale = Vector2( 19.4803, 0.825768 )
+current = true
+script = ExtResource( 20 )
+
+[node name="GUI" parent="Player" instance=ExtResource( 21 )]
+margin_left = -112.634
+margin_top = -151.122
+margin_right = 92.3657
+margin_bottom = 100.878
+
+[node name="HUD" parent="." instance=ExtResource( 22 )]
+
+[connection signal="is_walking" from="Player" to="Player/Controller" method="_on_Player_is_walking"]
+[connection signal="move_slave" from="Player" to="." method="_on_Player_move_slave"]
+[connection signal="shoot" from="Player" to="." method="_on_Player_shoot"]
+[connection signal="update_GUI" from="Player" to="." method="_on_Player_update_GUI"]
+[connection signal="velocity_changed" from="Player" to="." method="_on_Player_velocity_changed"]
+[connection signal="timeout" from="Player/Controller/Gun/Gun_Timer" to="Player" method="_on_Gun_Timer_timeout"]
+[connection signal="timeout" from="Player/Controller/Gun/Gun_Timer" to="." method="_on_Gun_Timer_timeout"]
+[connection signal="timeout" from="Player/Controller/Actor/Walk_timer" to="Player/Controller/Actor" method="_on_Timer_timeout"]

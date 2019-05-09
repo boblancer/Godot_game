@@ -36,13 +36,17 @@ animations = [ {
 "speed": 15.0
 } ]
 
-[node name="map" type="Node2D"]
+[node name="Player_scene" type="Node2D"]
 script = ExtResource( 1 )
 Global_bullet = ExtResource( 2 )
 
 [node name="Player" type="KinematicBody2D" parent="."]
-position = Vector2( 410.545, 178.52 )
+position = Vector2( 535.775, 300.066 )
+scale = Vector2( 0.560001, 0.560001 )
 script = ExtResource( 3 )
+__meta__ = {
+"_edit_group_": true
+}
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Player"]
 position = Vector2( -6.13876, 12.2774 )
@@ -63,7 +67,7 @@ script = ExtResource( 6 )
 position = Vector2( 92.4527, -14.5898 )
 
 [node name="Gun_Timer" type="Timer" parent="Player/Controller/Gun"]
-wait_time = 0.02
+wait_time = 0.09
 one_shot = true
 
 [node name="Actor" type="AnimatedSprite" parent="Player/Controller"]
@@ -77,6 +81,12 @@ script = ExtResource( 19 )
 [node name="Walk_timer" type="Timer" parent="Player/Controller/Actor"]
 wait_time = 0.1
 one_shot = true
+
+[node name="Camera2D" type="Camera2D" parent="Player"]
+position = Vector2( -5.2417, 5.68835 )
+rotation = 3.14159
+scale = Vector2( 19.4803, 0.825768 )
+current = true
 
 [connection signal="debug_message" from="Player" to="." method="_on_Player_debug_message"]
 [connection signal="is_walking" from="Player" to="Player/Controller" method="_on_Player_is_walking"]

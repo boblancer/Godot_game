@@ -16,8 +16,17 @@ _global_script_class_icons={
 [application]
 
 config/name="Shooter_game"
-run/main_scene="res://main.tscn"
+run/main_scene="res://interface/Menu.tscn"
 config/icon="res://icon.png"
+
+[autoload]
+
+Network="*res://Network.gd"
+
+[display]
+
+window/size/width=1200
+window/size/height=780
 
 [input]
 

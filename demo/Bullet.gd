@@ -5,6 +5,7 @@ export (int) var damage
 export (float) var lifetime
 
 var velocity = Vector2()
+const object_name = "Bullet"
 
 func start(_position, _direction):
 	position = _position

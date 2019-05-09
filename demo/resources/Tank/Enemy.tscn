@@ -1,0 +1,86 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://resources/Tank/EnemyTank.gd" type="Script" id=1]
+[ext_resource path="res://Explosive_shell.tscn" type="PackedScene" id=2]
+[ext_resource path="res://resources/Tank assets/tankBody_red.png" type="Texture" id=3]
+[ext_resource path="res://resources/tankRed_barrel2.png" type="Texture" id=4]
+[ext_resource path="res://resources/Tank/DetectRadius.gd" type="Script" id=5]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 47.1704, 58.3315 )
+
+[sub_resource type="CircleShape2D" id=2]
+radius = 388.577
+
+[node name="EnemyTank" type="KinematicBody2D"]
+position = Vector2( 380, 160 )
+rotation = 1.5708
+script = ExtResource( 1 )
+Bullet = ExtResource( 2 )
+max_speed = 150
+rotation_speed = 30.0
+gun_cooldown = 0.8
+health = 400
+turret_speed = 4.0
+detect_radius = 500
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Body" type="Sprite" parent="."]
+position = Vector2( 0.451263, 1.53954 )
+scale = Vector2( 1.54415, 1.54415 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="Turret" type="Sprite" parent="."]
+scale = Vector2( 2.57564, 2.57564 )
+texture = ExtResource( 4 )
+offset = Vector2( 20, 0 )
+flip_v = true
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Muzzle" type="Position2D" parent="Turret"]
+position = Vector2( 52.0996, -2.28882e-005 )
+
+[node name="GunTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="DetectRadius" type="Area2D" parent="."]
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DetectRadius"]
+rotation = -1.0011
+shape = SubResource( 2 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
+
+[node name="LookAhead1" type="RayCast2D" parent="."]
+position = Vector2( -45.5757, -45.5757 )
+rotation = 3.11861
+__meta__ = {
+"_edit_lock_": true
+}
+
+[node name="LookAhead2" type="RayCast2D" parent="."]
+position = Vector2( 40.4301, -47.0459 )
+rotation = 3.13322
+__meta__ = {
+"_edit_lock_": true
+}
+
+[connection signal="timeout" from="GunTimer" to="." method="_on_GunTimer_timeout"]
+[connection signal="body_entered" from="DetectRadius" to="." method="_on_DetectRadius_body_entered"]
+[connection signal="body_exited" from="DetectRadius" to="." method="_on_DetectRadius_body_exited"]

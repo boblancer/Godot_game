@@ -1,0 +1,33 @@
+[gd_scene load_steps=2 format=2]
+
+[ext_resource path="res://LineEdit.gd" type="Script" id=1]
+
+[node name="Lobby" type="Node2D"]
+
+[node name="PanelContainer" type="PanelContainer" parent="."]
+margin_right = 1024.0
+margin_bottom = 599.0
+
+[node name="Panel" type="Panel" parent="PanelContainer"]
+margin_left = 7.0
+margin_top = 7.0
+margin_right = 1017.0
+margin_bottom = 592.0
+
+[node name="LineEdit" type="LineEdit" parent="PanelContainer/Panel"]
+margin_left = -7.0
+margin_top = -7.0
+margin_right = 673.0
+margin_bottom = 51.0
+script = ExtResource( 1 )
+
+[node name="HTTPRequest" type="HTTPRequest" parent="PanelContainer/Panel/LineEdit"]
+
+[node name="Button" type="Button" parent="."]
+margin_left = 58.1422
+margin_top = 224.337
+margin_right = 389.142
+margin_bottom = 307.337
+text = "Start"
+
+[connection signal="request_completed" from="PanelContainer/Panel/LineEdit/HTTPRequest" to="PanelContainer/Panel/LineEdit" method="_on_HTTPRequest_request_completed"]

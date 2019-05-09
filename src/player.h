@@ -17,6 +17,9 @@
 #include <Timer.hpp>
 #include <ResourceLoader.hpp>
 
+#include <NetworkedMultiplayerENet.hpp>
+#include <NetworkedMultiplayerPeer.hpp>
+#include <MultiplayerAPI.hpp>
 
 namespace godot{
 
@@ -30,15 +33,13 @@ public:
     ~Player();
 
 	void _init();
-	String get_player_name();
-	
 
 	void _ready();
 	void _control(float delta);
 	void _process(float delta);
 	void shoot();
-	String Update_motion();
-
+	void handle_input();
+	void take_damage(int damage);
 	void _on_Gun_Timer_timeout();
 
 	Ref<PackedScene> Bullet;
@@ -51,10 +52,12 @@ private:
 	int ammo;
 	int speed;
 	int rotation_speed;;
+	int max_hp;
 	int hp;
 	Vector2 velocity;
 	bool can_shoot;
 	bool alive;
+	String object_name;
 
 
 };
