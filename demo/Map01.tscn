@@ -1,4 +1,4 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Map.gd" type="Script" id=1]
 [ext_resource path="res://resources/Terrain/Tileset.tres" type="TileSet" id=2]
@@ -17,6 +17,11 @@ height = 74.4731
 [sub_resource type="Curve2D" id=2]
 _data = {
 "points": PoolVector2Array( 0, 0, 0, 0, 1066.11, 120.77, 0, 0, 0, 0, 1060.56, 128.172, 0, 0, 0, 0, 1206.19, 915.209, 0, 0, 0, 0, 1209.99, 1222.59, 0, 0, 0, 0, 1179.63, 1579.3, 0, 0, 0, 0, 1084.76, 1810.78, 0, 0, 0, 0, 371.343, 1856.31, 0, 0, 0, 0, -30.903, 1704.52, 0, 0, 0, 0, 44.9926, 1381.97, 0, 0, 0, 0, 79.1456, 1074.59, 0, 0, 0, 0, 113.298, 736.855, 0, 0, 0, 0, 128.478, 254.918, 0, 0, 0, 0, 261.295, 106.921, 0, 0, 0, 0, 462.418, 114.511, 0, 0, 0, 0, 576.261, 125.895, 0, 0, 0, 0, 1066.11, 120.77 )
+}
+
+[sub_resource type="Curve2D" id=3]
+_data = {
+"points": PoolVector2Array(  )
 }
 
 [node name="Map01" type="Node2D"]
@@ -46,13 +51,17 @@ format = 1
 tile_data = PoolIntArray( 196619, -1073741716, 0, 327726, 131, 0, 393235, 1610612888, 0, 393237, 1610612888, 0, 458798, 132, 0, 524305, -1610612584, 0, 524307, 1610612746, 0, 524309, -1073741814, 0, 524311, 161, 0, 524336, 130, 0, 655379, -1610612726, 0, 655381, 1610612746, 0, 655383, 161, 0, 655407, 132, 0, 786434, 90, 0, 786436, 78, 0, 786438, 1610612824, 0, 786440, 93, 0, 786451, 152, 0, 786453, 152, 0, 786472, 102, 0, 917508, -1610612647, 0, 917510, 89, 0, 917512, 90, 0, 917525, 1610612866, 0, 983048, 93, 0, 983081, 1610612825, 0, 983083, -1073741735, 0, 1114153, -1610612647, 0, 1114155, -1073741736, 0, 1376298, 1073741995, 0, 1376300, -2147483477, 0, 1441835, -1073741731, 0, 1507370, 171, 0, 1507372, -1073741653, 0, 1572873, -1610612645, 0, 1572875, 1610612827, 0, 1703939, 101, 0, 1703945, 91, 0, 1703947, 92, 0, 1703949, 62, 0, 1703977, -1073741744, 0, 1900555, 122, 0, 1966087, 102, 0, 2031656, 112, 0, 2097192, -1610612625, 0, 2097193, -1073741712, 0, 2162726, 102, 0, 2162728, 112, 0 )
 
 [node name="Player_scene" parent="." instance=ExtResource( 4 )]
-position = Vector2( -1, 1 )
+position = Vector2( 34.2455, 16.1052 )
 
 [node name="Pineapple" type="Sprite" parent="."]
 position = Vector2( 1812.55, 1423.84 )
 scale = Vector2( 0.600349, 0.600349 )
 texture = ExtResource( 5 )
 script = ExtResource( 6 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="GUI" parent="Pineapple" instance=ExtResource( 7 )]
 margin_left = -271.0
@@ -72,6 +81,10 @@ shape = SubResource( 1 )
 [node name="Path2D" type="Path2D" parent="paths"]
 position = Vector2( 914.65, 100 )
 curve = SubResource( 2 )
+__meta__ = {
+"_edit_group_": true,
+"_edit_lock_": true
+}
 
 [node name="PathFollow2D" type="PathFollow2D" parent="paths/Path2D"]
 position = Vector2( 1066.11, 120.77 )
@@ -81,5 +94,9 @@ rotation = 2.22645
 position = Vector2( -36.6252, -7.30347 )
 rotation = 1.55721
 hp = 400
+
+[node name="Path2" type="Path2D" parent="paths"]
+position = Vector2( 403, 500 )
+curve = SubResource( 3 )
 
 [connection signal="shoot" from="paths/Path2D/PathFollow2D/EnemyTank" to="." method="_on_EnemyTank_shoot"]

@@ -8,7 +8,7 @@
 radius = 2.61321
 height = 17.7785
 
-[node name="Area2D" type="Area2D"]
+[node name="Bullet" type="Area2D"]
 position = Vector2( 2.65077, 0 )
 scale = Vector2( 1.46854, 2.72308 )
 script = ExtResource( 1 )
@@ -32,3 +32,4 @@ script = ExtResource( 3 )
 [node name="Lifetime" type="Timer" parent="."]
 wait_time = 2.0
 
+[connection signal="body_entered" from="." to="." method="_on_Bullet_body_entered"]

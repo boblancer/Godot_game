@@ -61,6 +61,7 @@ func _on_DetectRadius_body_exited(body):
 		target = null
 
 func take_damage(damage):
+	print("tank is taking damage")
 	hp -= damage
 	
 func shoot():
