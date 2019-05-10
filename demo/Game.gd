@@ -12,7 +12,7 @@ func _ready():
 	#add_child(new_player)
 	var info = Network.self_data
 	#map.add_child(new_player)
-	#new_player.init(Vector2(0,0), info.name, false)
+	new_player.init(Vector2(1500,800), info.name, false)
 	
 func spawn_item():
 	for i in range(3):

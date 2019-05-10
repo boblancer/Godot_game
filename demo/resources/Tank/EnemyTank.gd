@@ -10,7 +10,7 @@ export (PackedScene) var Bullet
 export (int) var max_speed
 export (float) var rotation_speed
 export (float) var gun_cooldown
-export (int) var health
+export (int) var hp
 
 export (float) var turret_speed
 export (int) var detect_radius
@@ -48,6 +48,8 @@ func _process(delta):
 		$Turret.global_rotation = current_dir.linear_interpolate(target_dir, turret_speed * delta).angle()
 		if target_dir.dot(current_dir) > 0.9:
 			shoot()
+	if hp <= 0:
+		queue_free()
 
 func _on_DetectRadius_body_entered(body):
 	if body.object_name == "fish":
@@ -55,10 +57,12 @@ func _on_DetectRadius_body_entered(body):
 		print("target acquire")
 
 func _on_DetectRadius_body_exited(body):
-	
 	if body == target:
 		target = null
 
+func take_damage(damage):
+	hp -= damage
+	
 func shoot():
 	if can_shoot:
 		can_shoot = false

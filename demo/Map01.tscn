@@ -76,12 +76,10 @@ curve = SubResource( 2 )
 [node name="PathFollow2D" type="PathFollow2D" parent="paths/Path2D"]
 position = Vector2( 1066.11, 120.77 )
 rotation = 2.22645
-__meta__ = {
-"_edit_group_": true
-}
 
 [node name="EnemyTank" parent="paths/Path2D/PathFollow2D" instance=ExtResource( 9 )]
 position = Vector2( -36.6252, -7.30347 )
 rotation = 1.55721
+hp = 400
 
 [connection signal="shoot" from="paths/Path2D/PathFollow2D/EnemyTank" to="." method="_on_EnemyTank_shoot"]

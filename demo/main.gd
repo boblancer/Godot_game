@@ -12,7 +12,7 @@ func init(pos, player_name , is_slave):
 		print("is master")
 		slave_position =  pos
 		
-	print("pos" + str(pos)) 
+	print("name " + player_name) 
 	$Player/GUI/Nickname.set_text(player_name)
 	
 	

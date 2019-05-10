@@ -102,6 +102,6 @@ margin_bottom = 100.878
 [connection signal="shoot" from="Player" to="." method="_on_Player_shoot"]
 [connection signal="update_GUI" from="Player" to="." method="_on_Player_update_GUI"]
 [connection signal="velocity_changed" from="Player" to="." method="_on_Player_velocity_changed"]
-[connection signal="timeout" from="Player/Controller/Gun/Gun_Timer" to="Player" method="_on_Gun_Timer_timeout"]
 [connection signal="timeout" from="Player/Controller/Gun/Gun_Timer" to="." method="_on_Gun_Timer_timeout"]
+[connection signal="timeout" from="Player/Controller/Gun/Gun_Timer" to="Player" method="_on_Gun_Timer_timeout"]
 [connection signal="timeout" from="Player/Controller/Actor/Walk_timer" to="Player/Controller/Actor" method="_on_Timer_timeout"]

@@ -50,6 +50,7 @@ position = Vector2( 2.60833, -0.068762 )
 scale = Vector2( 0.433779, 0.459043 )
 frames = SubResource( 2 )
 animation = "Explosion"
+frame = 1
 playing = true
 
 [node name="Timer" type="Timer" parent="."]
