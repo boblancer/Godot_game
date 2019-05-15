@@ -1,4 +1,4 @@
-[gd_scene load_steps=25 format=2]
+[gd_scene load_steps=24 format=2]
 
 [ext_resource path="res://main.gd" type="Script" id=1]
 [ext_resource path="res://Bullet.tscn" type="PackedScene" id=2]
@@ -21,7 +21,6 @@
 [ext_resource path="res://AnimatedSprite.gd" type="Script" id=19]
 [ext_resource path="res://Camera2D.gd" type="Script" id=20]
 [ext_resource path="res://interface/GUI.tscn" type="PackedScene" id=21]
-[ext_resource path="res://HUD.tscn" type="PackedScene" id=22]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 31.4001
@@ -95,13 +94,10 @@ margin_top = -151.122
 margin_right = 92.3657
 margin_bottom = 100.878
 
-[node name="HUD" parent="." instance=ExtResource( 22 )]
-
 [connection signal="is_walking" from="Player" to="Player/Controller" method="_on_Player_is_walking"]
-[connection signal="move_slave" from="Player" to="." method="_on_Player_move_slave"]
 [connection signal="shoot" from="Player" to="." method="_on_Player_shoot"]
 [connection signal="update_GUI" from="Player" to="." method="_on_Player_update_GUI"]
 [connection signal="velocity_changed" from="Player" to="." method="_on_Player_velocity_changed"]
-[connection signal="timeout" from="Player/Controller/Gun/Gun_Timer" to="." method="_on_Gun_Timer_timeout"]
 [connection signal="timeout" from="Player/Controller/Gun/Gun_Timer" to="Player" method="_on_Gun_Timer_timeout"]
+[connection signal="timeout" from="Player/Controller/Gun/Gun_Timer" to="." method="_on_Gun_Timer_timeout"]
 [connection signal="timeout" from="Player/Controller/Actor/Walk_timer" to="Player/Controller/Actor" method="_on_Timer_timeout"]

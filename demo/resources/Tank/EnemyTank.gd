@@ -18,7 +18,7 @@ var speed = 0
 var target = null
 
 var object_name = "tank"
-
+var max_hp = 400.0
 var velocity = Vector2()
 var can_shoot = true
 var alive = true
@@ -28,6 +28,7 @@ func _ready():
 	var circle = CircleShape2D.new()
 	$DetectRadius/CollisionShape2D.shape = circle
 	$DetectRadius/CollisionShape2D.shape.radius = detect_radius
+	$GUI/Nickname.text = "Tank"
 
 func control(delta):
 	if $LookAhead1.is_colliding() or $LookAhead2.is_colliding():
@@ -63,6 +64,8 @@ func _on_DetectRadius_body_exited(body):
 func take_damage(damage):
 	print("tank is taking damage")
 	hp -= damage
+	$GUI/HealthBar.set_value((hp/max_hp) * 100)
+	
 	
 func shoot():
 	if can_shoot:
@@ -72,10 +75,20 @@ func shoot():
 		emit_signal('shoot', Bullet, $Turret/Muzzle.global_position, dir)
 		
 func _physics_process(delta):
-	if not alive:
-		return
+	if hp <= 0: 
+		get_tree().get_root().find_node("Map01", true, false).enemy_count -= 1
+		queue_free()
 	control(delta)
 	move_and_slide(velocity)
 
 func _on_GunTimer_timeout():
 	can_shoot = true
+
+func _on_Shoot_timeout():
+	print("random shot")
+	var dir = Vector2(1, 0).rotated($Turret.global_rotation)
+	emit_signal('shoot', Bullet, $Turret/Muzzle.global_position, dir)
+	var b = Bullet.instance()
+	b.start($Turret/Muzzle.global_position, dir)
+	get_parent().add_child(b)
+	pass # Replace with function body.

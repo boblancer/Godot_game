@@ -2,15 +2,21 @@ extends Node2D
 var rect
 var cell
 
+var enemy_count  = 4;
+
 func init():
-	#$GUI/Nickname.text = nickname
-	#global_position = start_position
 	pass
 func _ready():
 	spawn_item()
 	
 	pass
+func _process(delta):
+	if enemy_count == 0:
+		print("win")
+		get_tree().change_scene('res://interface/Win.tscn')
 
+		queue_free()
+		enemy_count =1
 func spawn_item():
 	
 	for i in range(2):
@@ -20,6 +26,14 @@ func spawn_item():
 		crate.init(vec)
 		add_child(crate)
 		print("crate created" + str(vec))
+	for i in range (3):
+		randomize()		
+		var tank = preload("res://resources/Tank/Enemy.tscn").instance()
+		var vec = Vector2(randi() % 3000, randi() % 2000)
+		tank.position = vec;
+		add_child(tank)
+		print("Enemy generated at " + str(vec))
+		
 		
 func _on_EnemyTank_shoot(bullet, vec, direction):
 	print("shoot")

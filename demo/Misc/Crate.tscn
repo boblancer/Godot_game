@@ -2,21 +2,21 @@
 
 [ext_resource path="res://Crate.gd" type="Script" id=1]
 [ext_resource path="res://icon.png" type="Texture" id=2]
-[ext_resource path="res://resources/Tank assets/crateWood.png" type="Texture" id=3]
-[ext_resource path="res://resources/Tank assets/crateMetal.png" type="Texture" id=4]
+[ext_resource path="res://resources/Tank assets/crateMetal.png" type="Texture" id=3]
+[ext_resource path="res://resources/Tank assets/crateWood.png" type="Texture" id=4]
 [ext_resource path="res://Misc/Crate_Area.gd" type="Script" id=5]
 [ext_resource path="res://Misc/KinematicBody2D.gd" type="Script" id=6]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 3 ) ],
-"loop": false,
-"name": "Wooden",
+"loop": true,
+"name": "Metal",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
-"loop": true,
-"name": "Metal",
+"loop": false,
+"name": "Wooden",
 "speed": 5.0
 } ]
 

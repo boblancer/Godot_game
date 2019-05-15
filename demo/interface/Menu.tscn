@@ -1,4 +1,4 @@
-[gd_scene load_steps=26 format=2]
+[gd_scene load_steps=27 format=2]
 
 [ext_resource path="res://interface/Menu.gd" type="Script" id=1]
 [ext_resource path="res://resources/Login_Screen/frame_00_delay-0.16s.jpg" type="Texture" id=2]
@@ -24,6 +24,7 @@
 [ext_resource path="res://interface/buttons/join-pressed.png" type="Texture" id=22]
 [ext_resource path="res://interface/buttons/create.png" type="Texture" id=23]
 [ext_resource path="res://interface/buttons/create-pressed.png" type="Texture" id=24]
+[ext_resource path="res://interface/LineEdit.gd" type="Script" id=25]
 
 [sub_resource type="SpriteFrames" id=1]
 resource_local_to_scene = true
@@ -40,10 +41,10 @@ anchor_bottom = 1.0
 script = ExtResource( 1 )
 
 [node name="AnimatedSprite" type="AnimatedSprite" parent="."]
-position = Vector2( 612.176, 388.728 )
+position = Vector2( 625.13, 396.13 )
 scale = Vector2( 2.51037, 2.76828 )
 frames = SubResource( 1 )
-frame = 13
+frame = 8
 playing = true
 
 [node name="Sprite" type="Sprite" parent="."]
@@ -120,6 +121,18 @@ texture_pressed = ExtResource( 24 )
 expand = true
 stretch_mode = 5
 
+[node name="IpDisplay" type="LineEdit" parent="."]
+margin_left = 60.1577
+margin_top = 53.0457
+margin_right = 433.158
+margin_bottom = 112.046
+custom_fonts/font = ExtResource( 19 )
+text = "your ip"
+script = ExtResource( 25 )
+
+[node name="HTTPRequest" type="HTTPRequest" parent="IpDisplay"]
+
 [connection signal="text_changed" from="VBoxContainer/HBoxContainer/TextField" to="." method="_on_TextField_text_changed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/JoinButton" to="." method="_on_JoinButton_pressed"]
 [connection signal="pressed" from="VBoxContainer/HBoxContainer2/CreateButton" to="." method="_on_CreateButton_pressed"]
+[connection signal="request_completed" from="IpDisplay/HTTPRequest" to="IpDisplay" method="_on_HTTPRequest_request_completed"]

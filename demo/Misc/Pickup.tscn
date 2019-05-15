@@ -1,31 +1,31 @@
 [gd_scene load_steps=8 format=2]
 
 [ext_resource path="res://Pickup.gd" type="Script" id=1]
-[ext_resource path="res://resources/Weapons/1.png" type="Texture" id=2]
-[ext_resource path="res://resources/Weapons/2.png" type="Texture" id=3]
-[ext_resource path="res://resources/Weapons/13.png" type="Texture" id=4]
-[ext_resource path="res://resources/Weapons/11.png" type="Texture" id=5]
+[ext_resource path="res://resources/Weapons/11.png" type="Texture" id=2]
+[ext_resource path="res://resources/Weapons/13.png" type="Texture" id=3]
+[ext_resource path="res://resources/Weapons/2.png" type="Texture" id=4]
+[ext_resource path="res://resources/Weapons/1.png" type="Texture" id=5]
 
 [sub_resource type="SpriteFrames" id=1]
 animations = [ {
 "frames": [ ExtResource( 2 ) ],
 "loop": true,
-"name": "Revolver",
+"name": "Sniper",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 3 ) ],
 "loop": true,
-"name": "Uzi",
+"name": "Shotgun",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 4 ) ],
 "loop": true,
-"name": "Shotgun",
+"name": "Uzi",
 "speed": 5.0
 }, {
 "frames": [ ExtResource( 5 ) ],
 "loop": true,
-"name": "Sniper",
+"name": "Revolver",
 "speed": 5.0
 } ]
 

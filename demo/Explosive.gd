@@ -30,7 +30,7 @@ func _on_Lifetime_timeout():
 
 func _on_Explosive_body_entered(body):
 	explode()
-	if body.has_method('take_damage') :
+	if body.has_method('take_damage') and body.object_name != "tank":
 		body.take_damage(damage)
 
 	pass # Replace with function body.

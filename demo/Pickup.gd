@@ -1,7 +1,5 @@
 extends Area2D
 
-# Called when the node enters the scene tree for the first time.
-
 func _ready():
 	var random = randi() % 4
 	if(random == 1):
@@ -19,10 +17,6 @@ func _ready():
 
 func init(pos):
 	position = pos
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
-
 
 func _on_Pickup_body_entered(body):
 	#if body.object_name == "fish":

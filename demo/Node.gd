@@ -3,11 +3,6 @@ extends Node
 var tile_size = Vector2(128, 128)
 onready var texture = $Sprite.texture
 
-# Declare member variables here. Examples:
-# var a = 2
-# var b = "text"
-
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	var text_width = texture.get_width() / tile_size.x
 	var text_height = texture.get_height() / tile_size.y

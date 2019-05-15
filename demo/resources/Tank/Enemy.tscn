@@ -1,10 +1,11 @@
-[gd_scene load_steps=8 format=2]
+[gd_scene load_steps=9 format=2]
 
 [ext_resource path="res://resources/Tank/EnemyTank.gd" type="Script" id=1]
 [ext_resource path="res://Explosive_shell.tscn" type="PackedScene" id=2]
 [ext_resource path="res://resources/Tank assets/tankBody_red.png" type="Texture" id=3]
 [ext_resource path="res://resources/tankRed_barrel2.png" type="Texture" id=4]
 [ext_resource path="res://resources/Tank/DetectRadius.gd" type="Script" id=5]
+[ext_resource path="res://interface/GUI.tscn" type="PackedScene" id=6]
 
 [sub_resource type="RectangleShape2D" id=1]
 extents = Vector2( 47.1704, 58.3315 )
@@ -81,6 +82,17 @@ __meta__ = {
 "_edit_lock_": true
 }
 
+[node name="GUI" parent="." instance=ExtResource( 6 )]
+margin_left = -60.0003
+margin_top = -89.9998
+margin_right = 47.9997
+margin_bottom = 78.0002
+
+[node name="Shoot" type="Timer" parent="."]
+wait_time = 4.0
+autostart = true
+
 [connection signal="timeout" from="GunTimer" to="." method="_on_GunTimer_timeout"]
 [connection signal="body_entered" from="DetectRadius" to="." method="_on_DetectRadius_body_entered"]
 [connection signal="body_exited" from="DetectRadius" to="." method="_on_DetectRadius_body_exited"]
+[connection signal="timeout" from="Shoot" to="." method="_on_Shoot_timeout"]

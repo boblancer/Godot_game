@@ -82,8 +82,7 @@ shape = SubResource( 1 )
 position = Vector2( 914.65, 100 )
 curve = SubResource( 2 )
 __meta__ = {
-"_edit_group_": true,
-"_edit_lock_": true
+"_edit_group_": true
 }
 
 [node name="PathFollow2D" type="PathFollow2D" parent="paths/Path2D"]

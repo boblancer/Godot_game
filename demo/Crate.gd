@@ -1,7 +1,5 @@
 extends Area2D
 
-# Declare member variables here. Examples:
-# var a = 2
 var object_name = "crate"
 export (int) var Hp
 
@@ -17,14 +15,9 @@ func _ready():
 	print("crate randomize")
 	pass # Replace with function body.
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-#func _process(delta):
-#	pass
 func init(pos):
 	position = pos
 
-	
-		
 
 func _on_Crate_area_entered(area):
 	if area.object_name == "Bullet":

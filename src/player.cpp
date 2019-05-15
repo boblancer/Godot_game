@@ -7,7 +7,7 @@ Timer* Player::Gun_Timer ;
 
 Player::Player(){
 	velocity = Vector2(0,0);
-	speed = 500;
+	speed = 300;
 	ammo = 30;
 	object_name = "fish";
 	hp = 100;
